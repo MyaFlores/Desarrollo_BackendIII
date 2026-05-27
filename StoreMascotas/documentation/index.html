@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Adoption API - Documentación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold">Tienda de mascotas</h1>
+                <p class="text-sm opacity-90">API para gestión de perritos, adopción y filtros</p>
+            </div>
+            <div class="space-x-4">
+                <a href="#endpoints" class="hover:underline">Endpoints</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-4">🐾 Home Design - Dog Adoption API</h2>
+            <p class="text-xl max-w-2xl mx-auto">
+                API RESTful para gestionar perritos, realizar búsquedas, aplicar filtros dinámicos y consultar disponibilidad para adopción.
+            </p>
+            <div class="mt-6 flex justify-center gap-4">
+                <span class="bg-white/20 px-4 py-2 rounded-full">REST API</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full">JSON responses</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full">Filtros avanzados</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12" id="endpoints">
+        <h3 class="text-3xl font-bold text-center mb-12">Endpoints disponibles</h3>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Endpoint 1 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-green-500 text-white px-4 py-2">GET /api/dogs/</div>
+                <div class="p-4">
+                    <p class="font-bold mb-2">Descripción</p>
+                    <p class="text-gray-700 mb-3">Obtiene todos los perritos registrados. Soporta filtros y ordenamiento.</p>
+                    
+                    <p class="font-bold mb-2"> Parámetros (query)</p>
+                    <ul class="text-sm text-gray-600 mb-3 list-disc pl-5">
+                        <li><code>min_age</code> - Edad mínima en meses</li>
+                        <li><code>max_age</code> - Edad máxima en meses</li>
+                        <li><code>vaccinated</code> - true/false</li>
+                        <li><code>size</code> - small/medium/large</li>
+                        <li><code>adopted</code> - true/false</li>
+                        <li><code>ordering</code> - age, -age, weight, -weight</li>
+                    </ul>
+                    
+                    <p class="font-bold mb-2">Ejemplo request</p>
+                    <pre class="bg-gray-800 text-green-300 p-3 rounded text-xs overflow-x-auto">GET /api/dogs/?min_age=1&max_age=12&vaccinated=true&ordering=-weight</pre>
+                    
+                    <p class="font-bold mb-2 mt-3">Ejemplo response</p>
+                    <pre class="bg-gray-800 text-yellow-300 p-3 rounded text-xs overflow-x-auto">{
+  "message": "Dogs retrieved successfully",
+  "total": 2,
+  "data": [
+    {"id": 1, "name": "Walle", "breed": "Pug", "age": 8, ...}
+  ]
+}</pre>
+                    
+                    <div class="mt-3 flex gap-2">
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">200 OK</span>
+                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">400 Bad Request</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endpoint 2 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-blue-500 text-white px-4 py-2">GET /api/dogs/{id}/</div>
+                <div class="p-4">
+                    <p class="font-bold mb-2">Descripción</p>
+                    <p class="text-gray-700 mb-3">Obtiene un perrito específico por su ID.</p>
+                    
+                    <p class="font-bold mb-2">Parámetros (path)</p>
+                    <ul class="text-sm text-gray-600 mb-3 list-disc pl-5">
+                        <li><code>id</code> - ID del perrito (entero)</li>
+                    </ul>
+                    
+                    <p class="font-bold mb-2">Ejemplo request</p>
+                    <pre class="bg-gray-800 text-green-300 p-3 rounded text-xs">GET /api/dogs/5/</pre>
+                    
+                    <p class="font-bold mb-2 mt-3">Ejemplo response (éxito)</p>
+                    <pre class="bg-gray-800 text-yellow-300 p-3 rounded text-xs">{
+  "message": "Dog found",
+  "total": 1,
+  "data": {"id": 5, "name": "Luna", ...}
+}</pre>
+
+                    <p class="font-bold mb-2 mt-3">Error (404)</p>
+                    <pre class="bg-gray-800 text-red-300 p-3 rounded text-xs">{
+  "message": "Dog with id 99 not found",
+  "error": "Resource does not exist"
+}</pre>
+                    
+                    <div class="mt-3 flex gap-2">
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">200 OK</span>
+                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">404 Not Found</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endpoint 3 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-purple-500 text-white px-4 py-2">GET /api/dogs/breed/{raza}/</div>
+                <div class="p-4">
+                    <p class="font-bold mb-2">Descripción</p>
+                    <p class="text-gray-700 mb-3">Filtra perritos por raza exacta (insensible a mayúsculas).</p>
+                    
+                    <p class="font-bold mb-2">Ejemplo request</p>
+                    <pre class="bg-gray-800 text-green-300 p-3 rounded text-xs">GET /api/dogs/breed/pug/</pre>
+                    
+                    <p class="font-bold mb-2 mt-3">Ejemplo response</p>
+                    <pre class="bg-gray-800 text-yellow-300 p-3 rounded text-xs">{
+  "message": "Dogs of breed pug",
+  "total": 1,
+  "data": [...]
+}</pre>
+                    
+                    <div class="mt-3 flex gap-2">
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">200 OK</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endpoint 4 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-orange-500 text-white px-4 py-2">GET /api/dogs/search/{nombre}/</div>
+                <div class="p-4">
+                    <p class="font-bold mb-2">Descripción</p>
+                    <p class="text-gray-700 mb-3">Búsqueda por nombre (coincidencia parcial, insensible a mayúsculas).</p>
+                    
+                    <p class="font-bold mb-2">Ejemplo request</p>
+                    <pre class="bg-gray-800 text-green-300 p-3 rounded text-xs">GET /api/dogs/search/wal/</pre>
+                    
+                    <p class="font-bold mb-2 mt-3">Ejemplo response</p>
+                    <pre class="bg-gray-800 text-yellow-300 p-3 rounded text-xs">{
+  "message": "Found 1 dogs matching 'wal'",
+  "total": 1,
+  "data": [...]
+}</pre>
+                    
+                    <div class="mt-3 flex gap-2">
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">200 OK</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endpoint personalizado 1 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-pink-500 text-white px-4 py-2">GET /api/dogs/adoptable/</div>
+                <div class="p-4">
+                    <p class="font-bold mb-2">Descripción</p>
+                    <p class="text-gray-700 mb-3">Perritos aptos para adopción: no adoptados, vacunados y con energía media o alta.</p>
+                    
+                    <p class="font-bold mb-2">Ejemplo request</p>
+                    <pre class="bg-gray-800 text-green-300 p-3 rounded text-xs">GET /api/dogs/adoptable/</pre>
+                    
+                    <div class="mt-3 flex gap-2">
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">200 OK</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endpoint personalizado 2 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-teal-500 text-white px-4 py-2">GET /api/dogs/puppies/</div>
+                <div class="p-4">
+                    <p class="font-bold mb-2">Descripción</p>
+                    <p class="text-gray-700 mb-3">Cachorros (edad menor a 12 meses).</p>
+                    
+                    <p class="font-bold mb-2">Ejemplo request</p>
+                    <pre class="bg-gray-800 text-green-300 p-3 rounded text-xs">GET /api/dogs/puppies/</pre>
+                    
+                    <div class="mt-3 flex gap-2">
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">200 OK</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endpoint personalizado 3 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-red-500 text-white px-4 py-2">GET /api/dogs/high-energy/</div>
+                <div class="p-4">
+                    <p class="font-bold mb-2">Descripción</p>
+                    <p class="text-gray-700 mb-3">Perritos con nivel de energía alto (recomendados para familias activas).</p>
+                    
+                    <p class="font-bold mb-2">Ejemplo request</p>
+                    <pre class="bg-gray-800 text-green-300 p-3 rounded text-xs">GET /api/dogs/high-energy/</pre>
+                    
+                    <div class="mt-3 flex gap-2">
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">200 OK</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Aquí puedes agregar interactividad si lo deseas
+    </script>
+</body>
+</html>
