@@ -36,10 +36,21 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'rest_framework',  # ← Agregar Django REST Framework
     'django.contrib.staticfiles',
     'products',  # ← Agregar la app products
-    'rest_framework',
+    'rest_framework.authtoken',  # ← Agregar para autenticación con tokens
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',  # ← Usar autenticación con tokens y sesiones
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',  # ← Permitir solo a usuarios autenticados modificar datos
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
