@@ -1,0 +1,61 @@
+{
+  "info": {
+    "name": "E-commerce API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "CRUD - Clientes",
+      "item": [
+        {"name": "GET - Listar clientes", "request": {"method": "GET", "url": "http://127.0.0.1:8000/api/customers/"}},
+        {"name": "POST - Crear cliente", "request": {"method": "POST", "url": "http://127.0.0.1:8000/api/customers/", "body": "{\"name\":\"Pedro Pérez\",\"email\":\"pedro@email.com\",\"city\":\"Querétaro\"}"}},
+        {"name": "GET - Buscar cliente (?search=Ana)", "request": {"method": "GET", "url": "http://127.0.0.1:8000/api/customers/?search=Ana"}}
+      ]
+    },
+    {
+      "name": "CRUD - Productos",
+      "item": [
+        {"name": "GET - Listar productos", "request": {"method": "GET", "url": "http://127.0.0.1:8000/api/products/"}},
+        {"name": "GET - Filtrar por categoría (?category=electronica)", "request": {"method": "GET", "url": "http://127.0.0.1:8000/api/products/?category=electronica"}},
+        {"name": "GET - Ordenar por precio (?ordering=price)", "request": {"method": "GET", "url": "http://127.0.0.1:8000/api/products/?ordering=price"}}
+      ]
+    },
+    {
+      "name": "CRUD - Pedidos",
+      "item": [
+        {"name": "POST - Crear pedido", "request": {
+          "method": "POST",
+          "url": "http://127.0.0.1:8000/api/orders/",
+          "body": "{\n    \"customer\": 1,\n    \"items\": [\n        {\"product\": 1, \"quantity\": 2},\n        {\"product\": 2, \"quantity\": 1}\n    ]\n}"
+        }}
+      ]
+    },
+    {
+      "name": "Consultas Avanzadas",
+      "item": [
+        {"name": "GET - Productos por categoría (electronica)", "request": {"method": "GET", "url": "http://127.0.0.1:8000/api/products/category/electronica/"}},
+        {"name": "GET - Productos con stock bajo", "request": {"method": "GET", "url": "http://127.0.0.1:8000/api/products/low-stock/"}},
+        {"name": "GET - Clientes top", "request": {"method": "GET", "url": "http://127.0.0.1:8000/api/customers/top/"}},
+        {"name": "GET - Ventas por categoría", "request": {"method": "GET", "url": "http://127.0.0.1:8000/api/analytics/sales-by-category/"}},
+        {"name": "GET - Top 5 productos más vendidos", "request": {"method": "GET", "url": "http://127.0.0.1:8000/api/analytics/top-products/"}},
+        {"name": "GET - Pedidos por fecha", "request": {"method": "GET", "url": "http://127.0.0.1:8000/api/analytics/orders-by-date/?start_date=2024-01-01&end_date=2024-12-31"}},
+        {"name": "GET - Dashboard", "request": {"method": "GET", "url": "http://127.0.0.1:8000/api/analytics/dashboard/"}}
+      ]
+    },
+    {
+      "name": "Pruebas de Validación",
+      "item": [
+        {"name": "Crear pedido sin stock", "request": {
+          "method": "POST",
+          "url": "http://127.0.0.1:8000/api/orders/",
+          "body": "{\"customer\":1,\"items\":[{\"product\":1,\"quantity\":999}]}"
+        }},
+        {"name": "Crear producto con stock negativo", "request": {
+          "method": "POST",
+          "url": "http://127.0.0.1:8000/api/products/",
+          "body": "{\"name\":\"Producto Test\",\"category\":\"electronica\",\"price\":100,\"stock\":-5}"
+        }}
+      ]
+    }
+  ]
+}
